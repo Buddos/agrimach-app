@@ -135,3 +135,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+from pathlib import Path
+
+# Already defined in your settings:
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATIC_URL = '/static/'
+
+# Add this:
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Optional (but recommended for local dev)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
