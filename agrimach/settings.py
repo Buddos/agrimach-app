@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-@$_9e3oi%x0p&l8k8h4^^u=v9=$oe!p&)nwhjak%wa=_uk_yw3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["agrimach-app-production.up.railway.app", "localhost", "127.0.0.1"]
+
 
 
 # Application definition
