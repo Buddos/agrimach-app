@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ["agrimach-app-production.up.railway.app", "localhost", "127.0.0
 
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
