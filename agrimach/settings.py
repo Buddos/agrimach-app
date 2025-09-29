@@ -27,10 +27,12 @@ DEBUG = True
 
 import os
 
+DEBUG = os.getenv("VERCEL", None) is None  # False on Vercel, True locally
+
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.onrender.com',  # allows any subdomain of onrender.com
+    "localhost",
+    "127.0.0.1",
+    "agrimach-app.vercel.app",
 ]
 
 
@@ -55,16 +57,20 @@ INSTALLED_APPS = [
     'chat',
 ]
 
-
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+
+    # Whitenoise for serving static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = 'agrimach.urls'
 
@@ -131,7 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+    #STATIC_URL = 'static/'
 
 
 # Media files (user-uploaded content like product images)
@@ -146,15 +152,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 from pathlib import Path
 
-# Already defined in your settings:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-STATIC_URL = '/static/'
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]   # for development
+STATIC_ROOT = BASE_DIR / "staticfiles"     # where collectstatic will put files for production
 
-# Add this:
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Optional (but recommended for local dev)
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+# Whitenoise (for Vercel)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
